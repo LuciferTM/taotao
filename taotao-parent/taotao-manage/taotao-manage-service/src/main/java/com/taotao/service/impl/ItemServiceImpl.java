@@ -41,7 +41,6 @@ public class ItemServiceImpl implements ItemService {
         //分页返回
         PageHelper.startPage(page, rows);
         List<TbItem> list = itemMapper.selectByExample(example);
-
         //返回值对象
         EUDataGridResult result = new EUDataGridResult();
         result.setRows(list);
