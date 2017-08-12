@@ -1,11 +1,14 @@
 package com.taotao.service.impl;
 
+import com.taotao.common.util.FtpUtil;
 import com.taotao.common.util.IDUtils;
 import com.taotao.service.PictuerService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -29,8 +32,26 @@ public class PictuerServiceImpl implements PictuerService {
 
     @Override
     public Map uploadPicture(MultipartFile uploadFile) {
-        String oldName = uploadFile.getOriginalFilename();
-        String newName = IDUtils.genImageName();
-        newName = newName + oldName.substring(oldName.lastIndexOf("."));
+        Map resultMap = new HashMap<>();
+        try {
+            String oldName = uploadFile.getOriginalFilename();
+            String newName = IDUtils.genImageName();
+            newName = newName + oldName.substring(oldName.lastIndexOf("."));
+            String imagePath = new DateTime().toString("/yyyy/MM/dd");
+            boolean result = FtpUtil.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD,
+                    FTP_BASE_PATH, imagePath, newName, uploadFile.getInputStream());
+            if(!result) {
+                resultMap.put("error", 1);
+                resultMap.put("message", "文件上传失败");
+                return resultMap;
+            }
+            resultMap.put("error", 0);
+            resultMap.put("url", IMAGE_BASE_URL + imagePath + "/" + newName);
+            return resultMap;
+        } catch (Exception e) {
+            resultMap.put("error", 1);
+            resultMap.put("message", "文件上传发生异常");
+            return resultMap;
+        }
     }
 }
