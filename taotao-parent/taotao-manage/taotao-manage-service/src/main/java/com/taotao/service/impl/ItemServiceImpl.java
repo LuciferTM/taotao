@@ -5,8 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.taotao.common.pojo.EUDataGridResult;
 import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.common.util.IDUtils;
+import com.taotao.mapper.TbItemDescMapper;
 import com.taotao.mapper.TbItemMapper;
 import com.taotao.pojo.TbItem;
+import com.taotao.pojo.TbItemDesc;
 import com.taotao.pojo.TbItemExample;
 import com.taotao.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private TbItemMapper itemMapper;
+
+    @Autowired
+    private TbItemDescMapper itemDescMapper;
 
     @Override
     public TbItem getItemById(long itemId) {
@@ -53,7 +58,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public TaotaoResult createItem(TbItem item) {
+    public TaotaoResult createItem(TbItem item, String desc) throws Exception{
         Long itemId = IDUtils.genItemId();
         item.setId(itemId);
         // '商品状态，1-正常，2-下架，3-删除',
@@ -62,6 +67,21 @@ public class ItemServiceImpl implements ItemService {
         item.setUpdated(new Date());
         //插入到数据库
         itemMapper.insert(item);
+        TaotaoResult result = insertItemDesc(item, desc);
+        //如果出错抛出异常，那么Spring会自动回滚这个事务
+        if(result.getStatus() != 200){
+            throw new Exception();
+        }
+        return TaotaoResult.ok();
+    }
+
+    private TaotaoResult insertItemDesc(TbItem item, String desc){
+        TbItemDesc itemDesc = new TbItemDesc();
+        itemDesc.setItemDesc(desc);
+        itemDesc.setItemId(item.getId());
+        itemDesc.setCreated(new Date());
+        itemDesc.setUpdated(new Date());
+        itemDescMapper.insert(itemDesc);
         return TaotaoResult.ok();
     }
 }
