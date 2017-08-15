@@ -33,15 +33,15 @@ public class ItemController {
         EUDataGridResult result = itemService.getItemList(page, rows);
         return result;
     }
-    
+
     //TODO
     /*
     * 这里前端传过来的post数据，是如何对应到函数之中去的？
     * */
     @RequestMapping(value="/item/save", method = RequestMethod.POST)
     @ResponseBody
-    public TaotaoResult createItem(TbItem item, String desc) throws Exception{
-        TaotaoResult result = itemService.createItem(item, desc);
+    public TaotaoResult createItem(TbItem item, String desc, String paramData) throws Exception{
+        TaotaoResult result = itemService.createItem(item, desc, paramData);
         return result;
     }
 }
