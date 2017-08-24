@@ -28,6 +28,7 @@ public class ItemCatServiceImpl implements ItemCatService {
         criteria.andParentIdEqualTo(parentId);
         List<TbItemCat> list = itemCatMapper.selectByExample(example);
         List resultList = new ArrayList<>();
+        int count = 0;
         for(TbItemCat itemCat:list){
             //判断是否为叶子节点
             if(itemCat.getIsParent()){
@@ -40,6 +41,11 @@ public class ItemCatServiceImpl implements ItemCatService {
                 catNode.setUrl("/products/" + itemCat.getId() + ".html");
                 catNode.setItem(getCatList(itemCat.getId()));
                 resultList.add(catNode);
+                count ++;
+                //第一层只取14条记录
+                if (parentId == 0 && count >=14) {
+                    break;
+                }
             //叶子节点
             } else {
                 resultList.add("/products/"+itemCat.getId()+".html|" + itemCat.getName());
