@@ -65,4 +65,19 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
         }
         return TaotaoResult.ok(contentCategory);
     }
+
+    @Override
+    public TaotaoResult deleteContentCategory(long parentId, long id) {
+        tbContentCategoryMapper.deleteByPrimaryKey(id);
+        TbContentCategoryExample tbContentCategoryExample = new TbContentCategoryExample();
+        TbContentCategoryExample.Criteria criteria = tbContentCategoryExample.createCriteria();
+        criteria.andParentIdEqualTo(parentId);
+        List<TbContentCategory> list = tbContentCategoryMapper.selectByExample(tbContentCategoryExample);
+        if(list == null || list.size() == 0){
+            TbContentCategory tbContentCategory = tbContentCategoryMapper.selectByPrimaryKey(parentId);
+            tbContentCategory.setIsParent(false);
+            tbContentCategoryMapper.updateByPrimaryKey(tbContentCategory);
+        }
+        return TaotaoResult.ok();
+    }
 }

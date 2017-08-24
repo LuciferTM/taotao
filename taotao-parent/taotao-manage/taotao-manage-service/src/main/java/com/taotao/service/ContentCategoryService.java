@@ -14,4 +14,5 @@ import java.util.List;
 public interface ContentCategoryService {
     List<EUTreeNode> getCategoryList(long parent_id);
     TaotaoResult insertContentCategory(long parentId, String name);
+    TaotaoResult deleteContentCategory(long parentId, long id);
 }
