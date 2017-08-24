@@ -1,6 +1,7 @@
 package com.taotao.controller;
 
 import com.taotao.common.pojo.EUTreeNode;
+import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.service.ContentCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,5 +30,15 @@ public class ContentCategoryController {
     public List<EUTreeNode> getContentCatList(@RequestParam(value="id", defaultValue="0")Long parentId){
         List<EUTreeNode> list = contentCategoryService.getCategoryList(parentId);
         return list;
+    }
+
+
+    //POST接口， Spring的接口不需要设置方法吗 ？？？？？
+    //默认不写的话是支持既支持GET又支持POST的
+    @RequestMapping("/create")
+    @ResponseBody
+    public TaotaoResult createContentCategory(Long parentId, String name) {
+        TaotaoResult result = contentCategoryService.insertContentCategory(parentId, name);
+        return result;
     }
 }

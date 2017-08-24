@@ -1,6 +1,7 @@
 package com.taotao.service;
 
 import com.taotao.common.pojo.EUTreeNode;
+import com.taotao.common.pojo.TaotaoResult;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ import java.util.List;
  */
 public interface ContentCategoryService {
     List<EUTreeNode> getCategoryList(long parent_id);
+    TaotaoResult insertContentCategory(long parentId, String name);
 }
