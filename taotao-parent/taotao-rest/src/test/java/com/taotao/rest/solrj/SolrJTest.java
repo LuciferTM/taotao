@@ -18,7 +18,8 @@ public class SolrJTest {
     @Test
     public void addDocument() throws Exception{
         //创建连接
-        SolrServer solrServer = new HttpSolrServer("http://localhost:8080/solr/");
+        //url之中需要加上core的名字
+        SolrServer solrServer = new HttpSolrServer("http://localhost:8080/solr/my_solr");
         //创建文档对象
         SolrInputDocument solrInputDocument = new SolrInputDocument();
         solrInputDocument.addField("id", "test001");
@@ -32,7 +33,8 @@ public class SolrJTest {
 
     @Test
     public void deleteDocument() throws Exception {
-        SolrServer solrServer = new HttpSolrServer("http://localhost:8080/solr/");
+        //url之中需要加上core的名字
+        SolrServer solrServer = new HttpSolrServer("http://localhost:8080/solr/my_solr");
         solrServer.deleteById("test001");
         solrServer.deleteByQuery("*:*");
         solrServer.commit();
