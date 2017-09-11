@@ -4,6 +4,8 @@ import com.taotao.search.BaseTaotaoSearchTestCase;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +61,10 @@ public class SolrJTest extends BaseTaotaoSearchTestCase{
                 setHighlightSimplePre("<em style=\"color:red\">").
                 setHighlightSimplePost("</em>");
         QueryResponse rsp = solrServer.query(query);
+        SolrDocumentList solrDocumentList = rsp.getResults();
+        System.out.println(solrDocumentList.getNumFound());
+        for(SolrDocument doc:solrDocumentList){
+            System.out.println(doc);
+        }
     }
 }
