@@ -23,8 +23,8 @@ import java.util.List;
 @Service
 public class ContentServiceImpl implements ContentService {
 
-   @Value("${INDEX_CONTENT_REDIS_KEY}")
-   private String INDEX_CONTENT_REDIS_KEY;
+    @Value("${INDEX_CONTENT_REDIS_KEY}")
+    private String INDEX_CONTENT_REDIS_KEY;
 
     @Autowired
     private TbContentMapper tbContentMapper;
