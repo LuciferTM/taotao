@@ -1,6 +1,7 @@
 package com.taotao.sso.service;
 
 import com.taotao.common.pojo.TaotaoResult;
+import com.taotao.pojo.TbUser;
 
 /**
  * <p>Title:</p>
@@ -12,4 +13,5 @@ import com.taotao.common.pojo.TaotaoResult;
  */
 public interface UserService {
     TaotaoResult checkData(String param, Integer type);
+    TaotaoResult createUser(TbUser user);
 }
