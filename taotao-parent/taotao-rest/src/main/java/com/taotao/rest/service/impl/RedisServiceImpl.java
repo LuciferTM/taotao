@@ -2,7 +2,7 @@ package com.taotao.rest.service.impl;
 
 import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.common.util.ExceptionUtil;
-import com.taotao.rest.dao.JedisClient;
+import com.taotao.common.jedis.JedisClient;
 import com.taotao.rest.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

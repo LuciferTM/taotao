@@ -9,7 +9,7 @@ import com.taotao.pojo.TbItem;
 import com.taotao.pojo.TbItemDesc;
 import com.taotao.pojo.TbItemParamItem;
 import com.taotao.pojo.TbItemParamItemExample;
-import com.taotao.rest.dao.JedisClient;
+import com.taotao.common.jedis.JedisClient;
 import com.taotao.rest.service.ItemService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
