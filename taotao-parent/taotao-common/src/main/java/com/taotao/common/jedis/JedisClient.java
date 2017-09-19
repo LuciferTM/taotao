@@ -1,4 +1,4 @@
-package com.taotao.rest.dao;
+package com.taotao.common.jedis;
 
 /**
  * <p>Title:Jedis客户端接口</p>
