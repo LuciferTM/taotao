@@ -50,7 +50,7 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping(value = "/regist", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public Object regist(TbUser user){
         try {
@@ -61,4 +61,7 @@ public class UserController {
             return TaotaoResult.build(500, ExceptionUtil.getStackTrace(e));
         }
     }
+
+
+
 }
