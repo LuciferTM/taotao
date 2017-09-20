@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * <p>Title:验证用户数据的接口</p>
  * <p>Description: </p>
@@ -89,5 +92,21 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public Object userLogin(String username, String password,
+                            HttpServletRequest request, HttpServletResponse response){
+        if(StringUtils.isBlank(username) || StringUtils.isBlank(password)){
+            return TaotaoResult.build(400, "账号名或密码不能为空");
+        }
+        try {
+            TaotaoResult result = userService.login(username, password, request, response);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            TaotaoResult result = TaotaoResult.build(500, ExceptionUtil.getStackTrace(e));
+            return result;
+        }
+    }
 
 }
