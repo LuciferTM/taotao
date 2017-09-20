@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
         mappingJacksonValue.setJsonpFunction(callback);
         return mappingJacksonValue;
  }
+
+    有callback支持jsonp的时候返回不一定是TaotaoResult，所以接口的返回值设置为Object
  *
  * @author Lucifer
  * @date 2017/9/19
@@ -108,5 +110,22 @@ public class UserController {
             return result;
         }
     }
-
+    @RequestMapping(value="/token/{token}", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getUserByToken(@PathVariable String token, String callback){
+        TaotaoResult result = null;
+        try {
+            result = userService.getUserByToken(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = TaotaoResult.build(500, ExceptionUtil.getStackTrace(e));
+        }
+        if(StringUtils.isBlank(callback)){
+            return result;
+        } else {
+            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(result);
+            mappingJacksonValue.setJsonpFunction(callback);
+            return mappingJacksonValue;
+        }
+    }
 }

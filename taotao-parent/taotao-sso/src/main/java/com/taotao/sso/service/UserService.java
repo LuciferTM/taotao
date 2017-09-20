@@ -18,4 +18,5 @@ public interface UserService {
     TaotaoResult checkData(String param, Integer type);
     TaotaoResult createUser(TbUser user);
     TaotaoResult login(String username, String password, HttpServletRequest request, HttpServletResponse reponse);
+    TaotaoResult getUserByToken(String token);
 }

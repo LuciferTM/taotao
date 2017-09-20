@@ -8,6 +8,7 @@ import com.taotao.mapper.TbUserMapper;
 import com.taotao.pojo.TbUser;
 import com.taotao.pojo.TbUserExample;
 import com.taotao.sso.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -117,5 +118,14 @@ public class UserServiceImpl implements UserService {
         return TaotaoResult.ok(token);
 
 
+    }
+
+    @Override
+    public TaotaoResult getUserByToken(String token) {
+        String userinfo = jedisClient.get(REDIS_USER_SESSION_KEY + ":" + token);
+        if(StringUtils.isBlank(userinfo)){
+            return TaotaoResult.build(400, "token已过期");
+        }
+        return TaotaoResult.ok(JsonUtils.jsonToPojo(userinfo, TbUser.class));
     }
 }
